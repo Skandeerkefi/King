@@ -25,9 +25,7 @@ function HomePage() {
 	const monthEndISO = monthEndDate.toISOString();
 
 	useEffect(() => {
-		if (monthlyLeaderboard.length === 0) {
-			fetchLeaderboard();
-		}
+		if (monthlyLeaderboard.length === 0) fetchLeaderboard();
 	}, []);
 
 	const [timeLeft, setTimeLeft] = useState("");
@@ -62,44 +60,41 @@ function HomePage() {
 	}, [monthEndISO]);
 
 	return (
-		<div className='relative flex flex-col min-h-screen text-white'>
-			{/* 🎨 Animated Graphical Background */}
+		<div className='relative flex flex-col min-h-screen text-[#fefffe] '>
 			<GraphicalBackground />
 
 			<Navbar />
 
 			<main className='relative z-10 flex-grow'>
-				{/* Modern Hero Section with Kick Player Side-by-Side */}
+				{/* Hero Section */}
 				<section className='flex flex-col-reverse items-center justify-center max-w-6xl gap-16 px-6 mx-auto py-28 sm:flex-row sm:items-center'>
-					{/* Text Content */}
 					<div className='max-w-xl text-center sm:text-left'>
-						<h1 className='text-5xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-[#E10600] via-[#B03400] to-[#E10600] bg-clip-text text-transparent drop-shadow-md'>
-							MisterTee&apos;s <br /> Official Stream
+						<h1 className='text-5xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-[#ff0012] via-[#ffd01f] to-[#ff0012] bg-clip-text text-transparent drop-shadow-lg'>
+							King&apos;s <br /> Official Stream
 						</h1>
 
-						<div className='w-24 h-1 mt-6 rounded-full bg-[#E10600] animate-pulse' />
+						<div className='w-24 h-1 mt-6 rounded-full bg-[#ff0012] animate-pulse' />
 
-						<p className='mt-6 text-lg font-medium tracking-wide text-gray-300'>
-							Watch MisterTee live on Kick — your go-to destination for
-							thrilling gambling streams, giveaways, and more.
+						<p className='mt-6 text-lg font-medium tracking-wide text-[#fefffe]/80'>
+							Watch King live on Kick — thrilling gambling streams,
+							giveaways, and more.
 						</p>
 					</div>
 
-					{/* Kick Stream Embed */}
-					<div className='w-full max-w-xl aspect-video rounded-3xl overflow-hidden shadow-lg border-4 border-[#E10600]'>
+					<div className='w-full max-w-xl aspect-video rounded-3xl overflow-hidden shadow-lg border-4 border-[#ffd01f]'>
 						<iframe
-							src='https://player.kick.com/mistertee'
+							src='https://player.kick.com/King'
 							frameBorder='0'
 							allowFullScreen
-							title='MisterTee Live Stream'
+							title='King Live Stream'
 							className='w-full h-full'
 						></iframe>
 					</div>
 				</section>
 
-				{/* Metric-style Countdown Section */}
-				<section className='max-w-4xl mx-auto px-6 py-10 rounded-3xl bg-black/70 border border-[#E10600] shadow-lg'>
-					<h2 className='text-center text-3xl font-semibold mb-8 text-[#E10600] tracking-wide'>
+				{/* Countdown Section */}
+				<section className='max-w-4xl mx-auto px-6 py-10 rounded-3xl bg-[#000101]/70 border border-[#ffd01f] shadow-lg'>
+					<h2 className='text-center text-3xl font-semibold mb-8 text-[#ff0012] tracking-wide'>
 						⏳ Monthly Leaderboard Ends In
 					</h2>
 
@@ -112,12 +107,12 @@ function HomePage() {
 							return (
 								<div
 									key={label}
-									className='flex flex-col items-center justify-center bg-[#E10600]/10 rounded-xl py-6 px-8 min-w-[80px] sm:min-w-[100px] shadow-sm'
+									className='flex flex-col items-center justify-center bg-[#ffd01f]/10 rounded-xl py-6 px-8 min-w-[80px] sm:min-w-[100px] shadow-sm'
 								>
-									<span className='text-5xl font-extrabold tracking-tight text-white'>
+									<span className='text-5xl font-extrabold tracking-tight text-[#fefffe]'>
 										{value}
 									</span>
-									<span className='mt-2 text-sm font-medium text-[#E10600]'>
+									<span className='mt-2 text-sm font-medium text-[#ff0012]'>
 										{label}
 									</span>
 								</div>
@@ -126,17 +121,17 @@ function HomePage() {
 					</div>
 				</section>
 
-				{/* Leaderboard */}
+				{/* Leaderboard Section */}
 				<section className='container py-16'>
 					<div className='flex items-center justify-between mb-8'>
 						<div className='flex items-center gap-2'>
-							<Crown className='w-6 h-6 text-[#E10600]' />
+							<Crown className='w-6 h-6 text-[#ff0012]' />
 							<h2 className='text-2xl font-bold'>Monthly Leaderboard</h2>
 						</div>
 						<Button
 							variant='outline'
 							size='sm'
-							className='border-[#E10600] text-[#E10600] hover:bg-[#E10600] hover:text-white bg-black'
+							className='border-[#ffd01f] text-[#ffd01f] hover:bg-[#ffd01f] hover:text-[#fefffe] bg-[#000101]'
 							asChild
 						>
 							<Link to='/leaderboard' className='flex items-center gap-1'>
@@ -147,93 +142,81 @@ function HomePage() {
 					<LeaderboardTable period='monthly' data={topLeaderboard} />
 				</section>
 
-				{/* Redesigned Features Section */}
+				{/* Features Section */}
 				<section className='max-w-6xl px-6 py-16 mx-auto'>
-					<h2 className='mb-12 text-4xl font-bold text-center text-white'>
+					<h2 className='mb-12 text-4xl font-bold text-center text-[#fefffe]'>
 						What We Offer
 					</h2>
 					<div className='grid grid-cols-1 gap-10 sm:grid-cols-3'>
 						{[
 							{
 								icon: (
-									<Dices className='w-12 h-12 text-[#E10600] animate-pulse' />
+									<Dices className='w-12 h-12 text-[#ff0012] animate-pulse' />
 								),
 								title: "Exciting Gambling Streams",
 								description:
-									"Watch thrilling slot sessions, casino games, and big win moments with MisterTee on Rainbet.",
+									"Thrilling slots, casino games, and big wins live with King.",
 							},
 							{
 								icon: (
-									<Users className='w-12 h-12 text-[#E10600] animate-pulse' />
+									<Users className='w-12 h-12 text-[#ffd01f] animate-pulse' />
 								),
 								title: "Slot Call System",
 								description:
-									"Suggest slots for MisterTee to play during streams and see your suggestions come to life.",
+									"Suggest slots for King to play and see your choices live.",
 							},
 							{
 								icon: (
-									<Gift className='w-12 h-12 text-[#E10600] animate-pulse' />
+									<Gift className='w-12 h-12 text-[#ff0012] animate-pulse' />
 								),
 								title: "Regular Giveaways",
 								description:
-									"Participate in frequent giveaways for a chance to win cash, gaming gear, and more.",
+									"Win cash, gaming gear, and more through frequent giveaways.",
 							},
 						].map(({ icon, title, description }) => (
 							<div
 								key={title}
-								className='flex flex-col items-center bg-black/60 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-[#E10600] hover:scale-[1.05] transition-transform cursor-default'
+								className='flex flex-col items-center bg-[#000101]/60 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-[#ffd01f] hover:scale-[1.05] transition-transform cursor-default'
 							>
-								<div className='flex items-center justify-center w-20 h-20 rounded-full bg-black/50 border-2 border-[#E10600] mb-6'>
+								<div className='flex items-center justify-center w-20 h-20 rounded-full bg-[#000101]/50 border-2 border-[#ff0012] mb-6'>
 									{icon}
 								</div>
-								<h3 className='text-xl font-semibold text-white mb-3 relative after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-14 after:h-[2px] after:bg-gradient-to-r after:from-[#E10600] after:to-[#B03400]'>
+								<h3 className='text-xl font-semibold mb-3 relative after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-14 after:h-[2px] after:bg-gradient-to-r after:from-[#ff0012] after:to-[#ffd01f]'>
 									{title}
 								</h3>
-								<p className='text-center text-gray-300'>{description}</p>
+								<p className='text-center text-[#fefffe]/80'>{description}</p>
 							</div>
 						))}
 					</div>
 				</section>
 
-				{/* Redesigned Schedule Section */}
+				{/* Schedule Section */}
 				<section className='max-w-5xl px-6 py-16 mx-auto'>
-					<h2 className='mb-8 text-4xl font-bold text-center text-white'>
+					<h2 className='mb-8 text-4xl font-bold text-center text-[#fefffe]'>
 						📅 Stream Schedule
 					</h2>
-					<p className='max-w-xl mx-auto mb-10 text-center text-gray-400'>
-						MisterTee goes live <strong>every day</strong> — join the fun
-						anytime!
+					<p className='max-w-xl mx-auto mb-10 text-center text-[#fefffe]/70'>
+						King goes live <strong>every day</strong> — join anytime!
 					</p>
 
-					{/* Timeline container */}
+					{/* Timeline */}
 					<div className='relative items-center justify-between hidden max-w-full gap-8 px-4 mx-auto select-none sm:flex'>
-						{/* Horizontal connecting line */}
-						<div className='absolute top-1/2 left-8 right-8 h-1 bg-[#E10600]/30 rounded-full -z-10'></div>
-
-						{[
-							"Monday",
-							"Tuesday",
-							"Wednesday",
-							"Thursday",
-							"Friday",
-							"Saturday",
-							"Sunday",
-						].map((day) => (
+						<div className='absolute top-1/2 left-8 right-8 h-1 bg-[#ffd01f]/30 rounded-full -z-10'></div>
+						{["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
 							<div
 								key={day}
 								className='flex flex-col items-center cursor-default group'
 							>
-								<div className='w-14 h-14 rounded-full border-4 border-[#E10600] bg-black/70 shadow-[0_0_12px_#E10600] group-hover:scale-110 transition-transform flex items-center justify-center text-[#E10600] font-semibold text-lg select-text'>
-									{day.slice(0, 3)}
+								<div className='w-14 h-14 rounded-full border-4 border-[#ff0012] bg-[#000101] shadow-[0_0_12px_#ff0012] group-hover:scale-110 transition-transform flex items-center justify-center text-[#fefffe] font-semibold text-lg select-text'>
+									{day}
 								</div>
-								<p className='mt-3 text-sm text-gray-300 select-text'>
+								<p className='mt-3 text-sm text-[#fefffe]/70 select-text'>
 									7:30pm EST
 								</p>
 							</div>
 						))}
 					</div>
 
-					{/* Mobile stacked schedule */}
 					<div className='flex flex-col gap-4 sm:hidden'>
 						{[
 							"Monday",
@@ -246,10 +229,10 @@ function HomePage() {
 						].map((day) => (
 							<div
 								key={day}
-								className='bg-black/60 rounded-xl border border-[#E10600] p-4 shadow-md flex justify-between items-center'
+								className='bg-[#000101]/60 rounded-xl border border-[#ffd01f] p-4 shadow-md flex justify-between items-center'
 							>
-								<span className='font-semibold text-[#E10600]'>{day}</span>
-								<span className='text-gray-300'>7:30pm EST</span>
+								<span className='font-semibold text-[#ff0012]'>{day}</span>
+								<span className='text-[#fefffe]/80'>7:30pm EST</span>
 							</div>
 						))}
 					</div>
@@ -257,11 +240,11 @@ function HomePage() {
 					<div className='flex justify-center mt-12'>
 						<Button
 							size='lg'
-							className='bg-[#E10600] hover:bg-[#b00500] text-white shadow-lg transition'
+							className='bg-[#ff0012] hover:bg-[#a8000f] text-[#fefffe] shadow-lg transition'
 							asChild
 						>
 							<a
-								href='https://kick.com/MisterTee'
+								href='https://kick.com/King'
 								target='_blank'
 								rel='noreferrer'
 							>

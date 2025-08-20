@@ -17,7 +17,7 @@ export function GraphicalBackground() {
 		resizeCanvas();
 		window.addEventListener("resize", resizeCanvas);
 
-		// Particles
+		// Particles (glowing embers)
 		interface Particle {
 			x: number;
 			y: number;
@@ -26,26 +26,24 @@ export function GraphicalBackground() {
 			speedY: number;
 			color: string;
 			alpha: number;
+			pulse: number;
 		}
 
 		const particles: Particle[] = [];
-		const particleCount = 40;
-		const colors = [
-			"rgba(255, 0, 0, ", // red
-			"rgba(255, 255, 255, ", // white
-			"rgba(120, 120, 120, ", // gray
-		];
+		const particleCount = 60;
+		const colors = ["#ff0012", "#ff4500", "#ffd01f"]; // red-orange-yellow
 
 		for (let i = 0; i < particleCount; i++) {
 			const color = colors[Math.floor(Math.random() * colors.length)];
 			particles.push({
 				x: Math.random() * canvas.width,
 				y: Math.random() * canvas.height,
-				size: Math.random() * 2 + 1,
+				size: Math.random() * 3 + 1.5,
 				speedX: (Math.random() - 0.5) * 0.3,
 				speedY: (Math.random() - 0.5) * 0.3,
 				color,
-				alpha: Math.random() * 0.3 + 0.1,
+				alpha: Math.random() * 0.5 + 0.2,
+				pulse: Math.random() * Math.PI * 2,
 			});
 		}
 
@@ -64,24 +62,24 @@ export function GraphicalBackground() {
 
 		const tshirtImage = new Image();
 		tshirtImage.src =
-			"https://i.ibb.co/ksFzpHVx/Capture-d-cran-2025-08-11-133856-removebg-preview.png";
+			"https://i.ibb.co/275b59dD/Capture-d-cran-2025-08-20-191534-removebg-preview.png";
 
 		const shirts: FloatingItem[] = [];
-		const shirtCount = 25;
+		const shirtCount = 20;
 
 		for (let i = 0; i < shirtCount; i++) {
-			const layer = Math.floor(Math.random() * 3); // 0 = far, 2 = close
-			const baseSize = [50, 80, 120][layer];
+			const layer = Math.floor(Math.random() * 3);
+			const baseSize = [60, 100, 140][layer];
 			shirts.push({
 				x: Math.random() * canvas.width,
 				y: Math.random() * canvas.height,
-				size: baseSize + Math.random() * 40,
-				speedX: (Math.random() - 0.5) * (0.1 + layer * 0.05),
-				speedY: (Math.random() - 0.5) * (0.1 + layer * 0.05),
+				size: baseSize + Math.random() * 50,
+				speedX: (Math.random() - 0.5) * (0.2 + layer * 0.1),
+				speedY: (Math.random() - 0.5) * (0.2 + layer * 0.1),
 				rotation: Math.random() * Math.PI * 2,
-				rotationSpeed: (Math.random() - 0.5) * 0.002,
+				rotationSpeed: (Math.random() - 0.5) * 0.005,
 				layer,
-				opacity: 0.3 + layer * 0.3,
+				opacity: 0.3 + layer * 0.4,
 			});
 		}
 
@@ -89,14 +87,36 @@ export function GraphicalBackground() {
 		let animationFrameId: number;
 
 		const render = () => {
-			time += 0.01;
+			time += 0.02;
 
-			// Background
-			ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+			// Dark background with subtle gradient
+			const gradient = ctx.createRadialGradient(
+				canvas.width / 2,
+				canvas.height / 2,
+				0,
+				canvas.width / 2,
+				canvas.height / 2,
+				canvas.width
+			);
+			gradient.addColorStop(0, "#1a0000");
+			gradient.addColorStop(1, "#000101");
+			ctx.fillStyle = gradient;
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-			// Particles
+			// Light streaks
+			for (let i = 0; i < 3; i++) {
+				ctx.strokeStyle = `rgba(255,50,50,${0.02 + 0.03 * i})`;
+				ctx.lineWidth = 1 + i;
+				ctx.beginPath();
+				ctx.moveTo((time * 30 + i * 300) % canvas.width, 0);
+				ctx.lineTo((time * 30 + i * 300 + 300) % canvas.width, canvas.height);
+				ctx.stroke();
+			}
+
+			// Glowing particles
 			particles.forEach((p) => {
+				p.pulse += 0.05;
+				const glow = Math.sin(p.pulse) * 0.5 + 0.5;
 				p.x += p.speedX;
 				p.y += p.speedY;
 
@@ -106,18 +126,19 @@ export function GraphicalBackground() {
 				if (p.y < 0) p.y = canvas.height;
 
 				ctx.beginPath();
-				ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-				ctx.fillStyle = `${p.color}${p.alpha})`;
+				ctx.arc(p.x, p.y, p.size + glow, 0, Math.PI * 2);
+				ctx.fillStyle = p.color;
+				ctx.shadowBlur = 10 * glow;
+				ctx.shadowColor = p.color;
 				ctx.fill();
 			});
 
-			// Floating shirts
+			// Floating T-shirts with glow outline
 			shirts.forEach((shirt, idx) => {
-				// Wavy motion
 				shirt.x +=
-					shirt.speedX + Math.sin(time + idx) * 0.1 * (shirt.layer + 1);
+					shirt.speedX + Math.sin(time + idx) * 0.2 * (shirt.layer + 1);
 				shirt.y +=
-					shirt.speedY + Math.cos(time + idx) * 0.1 * (shirt.layer + 1);
+					shirt.speedY + Math.cos(time + idx) * 0.2 * (shirt.layer + 1);
 				shirt.rotation += shirt.rotationSpeed;
 
 				if (shirt.x > canvas.width) shirt.x = -shirt.size;
@@ -127,9 +148,8 @@ export function GraphicalBackground() {
 
 				ctx.save();
 				ctx.globalAlpha = shirt.opacity;
-				ctx.shadowColor = "rgba(0,0,0,0.5)";
-				ctx.shadowBlur = 15;
-
+				ctx.shadowColor = "#ff0012";
+				ctx.shadowBlur = 10;
 				ctx.translate(shirt.x + shirt.size / 2, shirt.y + shirt.size / 2);
 				ctx.rotate(shirt.rotation);
 				ctx.drawImage(
@@ -141,6 +161,20 @@ export function GraphicalBackground() {
 				);
 				ctx.restore();
 			});
+
+			// Optional: soft vignette
+			const vignette = ctx.createRadialGradient(
+				canvas.width / 2,
+				canvas.height / 2,
+				canvas.width / 4,
+				canvas.width / 2,
+				canvas.height / 2,
+				canvas.width / 1.2
+			);
+			vignette.addColorStop(0, "rgba(0,0,0,0)");
+			vignette.addColorStop(1, "rgba(0,0,0,0.6)");
+			ctx.fillStyle = vignette;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 			animationFrameId = requestAnimationFrame(render);
 		};
