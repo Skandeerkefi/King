@@ -124,7 +124,7 @@ function HomePage() {
 							🚀 Hop into the action — play smarter with MisterTee on Roobet.
 						</p>
 						<a
-							href='https://roobet.com/?code=MisterTee'
+							href='https://roobet.com/?code=KING'
 							target='_blank'
 							rel='noreferrer'
 							className='w-full text-center py-3 px-4 bg-[#E10600] text-white font-semibold rounded-xl shadow-lg hover:bg-[#b00500] transition'
