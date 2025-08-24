@@ -19,7 +19,7 @@ interface LeaderboardState {
 }
 
 const API_URL =
-	"https://misterteedata-production.up.railway.app/api/affiliates";
+	"https://kingdata.onrender.com/api/affiliates";
 
 const getDateRange = (
 	period: LeaderboardPeriod

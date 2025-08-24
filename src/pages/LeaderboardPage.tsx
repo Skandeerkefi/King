@@ -88,7 +88,7 @@ function LeaderboardPage() {
 							</TooltipTrigger>
 							<TooltipContent className='max-w-xs bg-[#191F3B] text-white border border-[#EA6D0C] shadow-lg rounded-md p-3 text-sm'>
 								The leaderboard ranks players based on their total wager amount
-								using the MisterTee affiliate code on Rainbet. Higher wagers
+								using the King affiliate code on Rainbet. Higher wagers
 								result in a better ranking.
 							</TooltipContent>
 						</Tooltip>
@@ -99,7 +99,7 @@ function LeaderboardPage() {
 				<div className='p-6 mb-10 rounded-lg bg-gray-300/20 border border-[#AF2D03] text-white shadow-md'>
 					<p className='mb-4 leading-relaxed text-gray-100'>
 						Use affiliate code{" "}
-						<span className='font-semibold text-[#AF2D03]'>MisterTee</span> on{" "}
+						<span className='font-semibold text-[#AF2D03]'>King</span> on{" "}
 						<a
 							href='https://rainbet.com'
 							target='_blank'
@@ -115,7 +115,7 @@ function LeaderboardPage() {
 						<span className='font-semibold text-[#AF2D03]'>
 							Affiliate Code:
 						</span>
-						<span className='font-bold text-white'>MisterTee</span>
+						<span className='font-bold text-white'>King</span>
 					</div>
 				</div>
 

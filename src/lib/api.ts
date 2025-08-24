@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
 	// baseURL: "https://misterteedata.onrender.com",
-	baseURL: "https://misterteedata-production.up.railway.app",
+	baseURL: "https://kingdata.onrender.com",
 	// Your backend URL
 });
 
