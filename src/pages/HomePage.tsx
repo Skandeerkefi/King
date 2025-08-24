@@ -2,62 +2,71 @@ import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { LeaderboardTable } from "@/components/LeaderboardTable";
+// import { LeaderboardTable } from "@/components/LeaderboardTable";
 import { Link } from "react-router-dom";
 import { Dices, Crown, Gift, Users, ArrowRight } from "lucide-react";
-import { useLeaderboardStore } from "@/store/useLeaderboardStore";
-import { useSlotCallStore } from "@/store/useSlotCallStore";
-import { useGiveawayStore } from "@/store/useGiveawayStore";
+// import { useLeaderboardStore } from "@/store/useLeaderboardStore";
+// import { useSlotCallStore } from "@/store/useSlotCallStore";
+// import { useGiveawayStore } from "@/store/useGiveawayStore";
 import GraphicalBackground from "@/components/GraphicalBackground";
-
+import { useRoobetStore } from "@/store/RoobetStore";
 function HomePage() {
-	const { slotCalls } = useSlotCallStore();
-	const { giveaways } = useGiveawayStore();
-	const { monthlyLeaderboard, fetchLeaderboard } = useLeaderboardStore();
+	// const { slotCalls } = useSlotCallStore();
+	// const { giveaways } = useGiveawayStore();
+	// const { monthlyLeaderboard, fetchLeaderboard } = useLeaderboardStore();
 
-	const topLeaderboard = Array.isArray(monthlyLeaderboard)
-		? monthlyLeaderboard.slice(0, 5)
-		: [];
+	// const topLeaderboard = Array.isArray(monthlyLeaderboard)
+	// 	? monthlyLeaderboard.slice(0, 5)
+	// 	: [];
 
-	const now = new Date();
-	const monthEndDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-	monthEndDate.setHours(23, 59, 59, 999);
-	const monthEndISO = monthEndDate.toISOString();
+	// const now = new Date();
+	// const monthEndDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+	// monthEndDate.setHours(23, 59, 59, 999);
+	// const monthEndISO = monthEndDate.toISOString();
+
+	// useEffect(() => {
+	// 	if (monthlyLeaderboard.length === 0) fetchLeaderboard();
+	// }, []);
+
+	// const [timeLeft, setTimeLeft] = useState("");
+
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		const now = new Date();
+	// 		const end = new Date(monthEndISO);
+	// 		const diff = end.getTime() - now.getTime();
+
+	// 		if (diff <= 0) {
+	// 			setTimeLeft("00d : 00h : 00m : 00s");
+	// 			clearInterval(interval);
+	// 			return;
+	// 		}
+
+	// 		const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+	// 		const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+	// 		const minutes = Math.floor((diff / (1000 * 60)) % 60);
+	// 		const seconds = Math.floor((diff / 1000) % 60);
+
+	// 		setTimeLeft(
+	// 			`${days.toString().padStart(2, "0")}d : ${hours
+	// 				.toString()
+	// 				.padStart(2, "0")}h : ${minutes
+	// 				.toString()
+	// 				.padStart(2, "0")}m : ${seconds.toString().padStart(2, "0")}s`
+	// 		);
+	// 	}, 1000);
+
+	// 	return () => clearInterval(interval);
+	// }, [monthEndISO]);
+	const { leaderboard, loading, fetchLeaderboard } = useRoobetStore();
 
 	useEffect(() => {
-		if (monthlyLeaderboard.length === 0) fetchLeaderboard();
-	}, []);
+		if (!leaderboard) {
+			fetchLeaderboard();
+		}
+	}, [leaderboard, fetchLeaderboard]);
 
-	const [timeLeft, setTimeLeft] = useState("");
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			const now = new Date();
-			const end = new Date(monthEndISO);
-			const diff = end.getTime() - now.getTime();
-
-			if (diff <= 0) {
-				setTimeLeft("00d : 00h : 00m : 00s");
-				clearInterval(interval);
-				return;
-			}
-
-			const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-			const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-			const minutes = Math.floor((diff / (1000 * 60)) % 60);
-			const seconds = Math.floor((diff / 1000) % 60);
-
-			setTimeLeft(
-				`${days.toString().padStart(2, "0")}d : ${hours
-					.toString()
-					.padStart(2, "0")}h : ${minutes
-					.toString()
-					.padStart(2, "0")}m : ${seconds.toString().padStart(2, "0")}s`
-			);
-		}, 1000);
-
-		return () => clearInterval(interval);
-	}, [monthEndISO]);
+	const top3 = leaderboard?.data.slice(0, 3) || [];
 
 	return (
 		<div className='relative flex flex-col min-h-screen text-[#fefffe] '>
@@ -76,8 +85,8 @@ function HomePage() {
 						<div className='w-24 h-1 mt-6 rounded-full bg-[#ff0012] animate-pulse' />
 
 						<p className='mt-6 text-lg font-medium tracking-wide text-[#fefffe]/80'>
-							Watch King live on Kick — thrilling gambling streams,
-							giveaways, and more.
+							Watch King live on Kick — thrilling gambling streams, giveaways,
+							and more.
 						</p>
 					</div>
 
@@ -91,9 +100,75 @@ function HomePage() {
 						></iframe>
 					</div>
 				</section>
+				{/* Roobet Card */}
+				<div className='flex items-center justify-center py-20'>
+					{/* ⬆ replaced min-h-screen with py-20 for controlled spacing */}
+					<div className='bg-black/60 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-[#E10600] hover:scale-[1.03] transition-transform flex flex-col max-w-md w-full'>
+						<div className='flex items-center justify-center mb-4'>
+							<img
+								src='https://i.ibb.co/4w1vNNHT/65c0f428cc0de4676934f8d5-logob.png'
+								alt='Roobet'
+								className='object-contain h-20'
+							/>
+						</div>
+						<h3 className='text-2xl font-semibold text-center text-[#E10600] mb-6'>
+							🦘 Roobet Rewards with KING
+						</h3>
+						<ul className='mb-6 space-y-3 text-base text-gray-300'>
+							<li>🎁 Welcome Bonus on your first play</li>
+							<li>⚡ Exclusive KING promotions & boosts</li>
+							<li>🎟️ Access to community giveaways</li>
+							<li>🔒 More rewards rolling out soon</li>
+						</ul>
+						<p className='mt-auto mb-6 italic text-center text-gray-200'>
+							🚀 Hop into the action — play smarter with MisterTee on Roobet.
+						</p>
+						<a
+							href='https://roobet.com/?code=MisterTee'
+							target='_blank'
+							rel='noreferrer'
+							className='w-full text-center py-3 px-4 bg-[#E10600] text-white font-semibold rounded-xl shadow-lg hover:bg-[#b00500] transition'
+						>
+							Join Roobet
+						</a>
+					</div>
+				</div>
+
+				{/* Top 3 Wagered Players */}
+				<div className='max-w-3xl mx-auto mt-8 bg-black/60 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-[#ffd01f]'>
+					<h3 className='text-2xl font-bold text-center text-[#ffd01f] mb-6'>
+						🏆 Top 3 Wagered Players
+					</h3>
+
+					{loading ? (
+						<p className='text-center text-gray-400'>Loading leaderboard...</p>
+					) : (
+						<div className='grid grid-cols-1 gap-6 sm:grid-cols-3'>
+							{top3.map((player, idx) => (
+								<div
+									key={player.uid}
+									className='flex flex-col items-center bg-[#000101]/70 rounded-2xl p-6 shadow-md border border-[#ff0012]'
+								>
+									<span className='text-3xl font-bold text-[#ffd01f]'>
+										#{idx + 1}
+									</span>
+									<p className='mt-2 text-lg font-semibold text-[#fefffe]'>
+										{player.username}
+									</p>
+									<p className='mt-1 text-sm text-gray-300'>
+										💰 {player.wagered.toLocaleString()} wagered
+									</p>
+									<p className='mt-1 text-xs italic text-gray-400'>
+										Fav: {player.favoriteGameTitle || "—"}
+									</p>
+								</div>
+							))}
+						</div>
+					)}
+				</div>
 
 				{/* Countdown Section */}
-				<section className='max-w-4xl mx-auto px-6 py-10 rounded-3xl bg-[#000101]/70 border border-[#ffd01f] shadow-lg'>
+				{/* <section className='max-w-4xl mx-auto px-6 py-10 rounded-3xl bg-[#000101]/70 border border-[#ffd01f] shadow-lg'>
 					<h2 className='text-center text-3xl font-semibold mb-8 text-[#ff0012] tracking-wide'>
 						⏳ Monthly Leaderboard Ends In
 					</h2>
@@ -119,10 +194,10 @@ function HomePage() {
 							);
 						})}
 					</div>
-				</section>
+				</section> */}
 
 				{/* Leaderboard Section */}
-				<section className='container py-16'>
+				{/* <section className='container py-16'>
 					<div className='flex items-center justify-between mb-8'>
 						<div className='flex items-center gap-2'>
 							<Crown className='w-6 h-6 text-[#ff0012]' />
@@ -140,7 +215,7 @@ function HomePage() {
 						</Button>
 					</div>
 					<LeaderboardTable period='monthly' data={topLeaderboard} />
-				</section>
+				</section> */}
 
 				{/* Features Section */}
 				<section className='max-w-6xl px-6 py-16 mx-auto'>
@@ -211,7 +286,7 @@ function HomePage() {
 									{day}
 								</div>
 								<p className='mt-3 text-sm text-[#fefffe]/70 select-text'>
-									7:30pm EST
+									6:00pm EST
 								</p>
 							</div>
 						))}
@@ -243,11 +318,7 @@ function HomePage() {
 							className='bg-[#ff0012] hover:bg-[#a8000f] text-[#fefffe] shadow-lg transition'
 							asChild
 						>
-							<a
-								href='https://kick.com/King'
-								target='_blank'
-								rel='noreferrer'
-							>
+							<a href='https://kick.com/King' target='_blank' rel='noreferrer'>
 								Watch Live on Kick
 							</a>
 						</Button>
