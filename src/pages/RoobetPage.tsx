@@ -32,6 +32,40 @@ const RoobetPage: React.FC = () => {
 							{leaderboard.disclosure}
 						</p>
 
+						{/* Prize Pool Section */}
+						<section className='mb-12'>
+							<h2 className='mb-6 text-2xl font-bold text-center text-[#e10600]'>
+								Leaderboard Prizes ($250 Total)
+							</h2>
+							<div className='grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-5'>
+								<PrizeCard
+									position='1st'
+									prize='$125'
+									color='from-yellow-500 to-orange-600'
+								/>
+								<PrizeCard
+									position='2nd'
+									prize='$75'
+									color='from-gray-400 to-gray-600'
+								/>
+								<PrizeCard
+									position='3rd'
+									prize='$25'
+									color='from-amber-700 to-yellow-800'
+								/>
+								<PrizeCard
+									position='4th'
+									prize='$12.5'
+									color='from-[#444] to-[#666]'
+								/>
+								<PrizeCard
+									position='5th'
+									prize='$12.5'
+									color='from-[#333] to-[#555]'
+								/>
+							</div>
+						</section>
+
 						{/* Top 3 Players as Cards */}
 						<div className='grid grid-cols-1 gap-6 mb-10 md:grid-cols-3'>
 							{leaderboard.data.slice(0, 3).map((player) => (
@@ -70,6 +104,13 @@ const RoobetPage: React.FC = () => {
 									<p className='mt-3 text-sm md:text-base font-medium text-[#fefefe] italic'>
 										Favorite: {player.favoriteGameTitle}
 									</p>
+
+									{/* Reward */}
+									<p className='mt-4 text-lg font-bold text-[#e10600]'>
+										{player.rankLevel === 1 && "$125 Prize"}
+										{player.rankLevel === 2 && "$75 Prize"}
+										{player.rankLevel === 3 && "$25 Prize"}
+									</p>
 								</div>
 							))}
 						</div>
@@ -85,6 +126,7 @@ const RoobetPage: React.FC = () => {
 											<th className='p-3'>Wagered</th>
 											<th className='p-3'>Weighted Wagered</th>
 											<th className='p-3'>Favorite Game</th>
+											<th className='p-3'>Prize</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -102,6 +144,11 @@ const RoobetPage: React.FC = () => {
 													{player.weightedWagered.toLocaleString()}
 												</td>
 												<td className='p-3'>{player.favoriteGameTitle}</td>
+												<td className='p-3'>
+													{player.rankLevel === 4 && "$12.5"}
+													{player.rankLevel === 5 && "$12.5"}
+													{player.rankLevel > 5 && "-"}
+												</td>
 											</tr>
 										))}
 									</tbody>
@@ -116,5 +163,21 @@ const RoobetPage: React.FC = () => {
 		</div>
 	);
 };
+
+// Simple Prize Card
+interface PrizeCardProps {
+	position: string;
+	prize: string;
+	color: string;
+}
+
+const PrizeCard: React.FC<PrizeCardProps> = ({ position, prize, color }) => (
+	<div
+		className={`p-6 rounded-xl shadow-lg text-center font-bold text-[#fefefe] bg-gradient-to-br ${color}`}
+	>
+		<h3 className='mb-2 text-xl'>{position} Place</h3>
+		<p className='text-lg'>{prize}</p>
+	</div>
+);
 
 export default RoobetPage;
