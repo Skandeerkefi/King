@@ -124,7 +124,7 @@ export function Navbar() {
 							)}
 						</div>
 
-						{/* User controls */}
+						{/* Desktop User controls */}
 						{!isMobile && (
 							<>
 								{user ? (
@@ -188,8 +188,54 @@ export function Navbar() {
 				</div>
 			</nav>
 
-			{/* Spacer to prevent content from hiding under navbar */}
-			<div className="h-20"></div>
+			{/* Mobile Menu */}
+			{isMobile && (
+				<div
+					className={`fixed inset-0 z-40 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start pt-24 space-y-8 text-lg font-semibold text-[#fefffe] transform transition-transform duration-300 ${
+						isOpen ? "translate-x-0" : "-translate-x-full"
+					}`}
+				>
+					{menuItems.map((item) => (
+						<Link
+							key={item.path}
+							to={item.path}
+							className={`flex items-center space-x-3 ${
+								location.pathname === item.path
+									? "text-[#ff0012]"
+									: "hover:text-[#ffd01f]"
+							}`}
+						>
+							{item.icon}
+							<span>{item.name}</span>
+						</Link>
+					))}
+
+					{/* User controls on mobile */}
+					{user ? (
+						<button
+							onClick={logout}
+							className='flex items-center space-x-2 bg-[#ff0012] px-4 py-2 rounded-lg text-white'
+						>
+							<LogOut className='w-5 h-5' /> <span>Logout</span>
+						</button>
+					) : (
+						<>
+							<Link
+								to='/login'
+								className='flex items-center space-x-2 border border-[#ff0012] text-[#ff0012] hover:bg-[#ff0012] hover:text-white px-4 py-2 rounded-lg'
+							>
+								<LogIn className='w-5 h-5' /> Login
+							</Link>
+							<Link to='/signup' className='text-white hover:text-[#ffd01f]'>
+								Sign Up
+							</Link>
+						</>
+					)}
+				</div>
+			)}
+
+			{/* Spacer */}
+			<div className='h-20'></div>
 		</>
 	);
 }
