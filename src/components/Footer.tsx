@@ -16,8 +16,8 @@ export function Footer() {
 						<p className='text-sm text-[#fffcf5]/70'>
 							Join King&apos;s community for exciting gambling streams,
 							giveaways, and more. Use affiliate code{" "}
-							<span className='font-semibold text-[#c63427]'>King</span> on
-							Rainbet.
+							<span className='font-semibold text-[#c63427]'>DonkeyG</span> on
+							Roobet.
 						</p>
 					</div>
 
