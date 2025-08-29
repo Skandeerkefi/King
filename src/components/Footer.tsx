@@ -27,7 +27,7 @@ export function Footer() {
 						<div className='grid grid-cols-2 gap-2'>
 							{[
 								{ to: "/", label: "Home" },
-								{ to: "/leaderboard", label: "Leaderboard" },
+								{ to: "/leaderboards", label: "Leaderboard" },
 								{ to: "/terms", label: "Terms & Conditions" },
 								{ to: "/privacy", label: "Privacy Policy" },
 							].map(({ to, label }) => (
