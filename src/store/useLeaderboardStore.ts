@@ -19,7 +19,7 @@ interface LeaderboardState {
 }
 
 const API_URL =
-	"https://kingdata.onrender.com/api/affiliates";
+	"https://kingdata-vez1.onrender.com/api/affiliates";
 
 const getDateRange = (
 	period: LeaderboardPeriod

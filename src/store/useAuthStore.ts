@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 	login: async (kickUsername, password) => {
 		try {
 			const res = await fetch(
-				"https://kingdata.onrender.com/api/auth/login",
+				"https://kingdata-vez1.onrender.com/api/auth/login",
 				// "https://pnpplxprssdata.onrender.com/api/auth/login",
 				{
 					method: "POST",
@@ -81,7 +81,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 		try {
 			const res = await fetch(
 				// "https://pnpplxprssdata.onrender.com/api/auth/register",
-				"https://kingdata.onrender.com/api/auth/register",
+				"https://kingdata-vez1.onrender.com/api/auth/register",
 				{
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
