@@ -32,7 +32,7 @@ export const useRoobetStore = create<RoobetStore>((set) => ({
 		set({ loading: true, error: null });
 
 		try {
-			let url = "https://kingdata.onrender.com/api/leaderboard";
+			let url = "https://kingdata-vez1.onrender.com/api/leaderboard";
 			if (startDate && endDate) {
 				url += `/${startDate}/${endDate}`;
 			}
